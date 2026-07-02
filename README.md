@@ -2,7 +2,7 @@
   <img src="https://i.ibb.co/3mbXRWBd/Screenshot-2026-05-03-at-2-01-55-PM.png" alt="SunCart Logo" width="120" />
   <h1> NestHome</h1>
   <p><strong>Property Rental & Booking Platform</strong></p>
-
+<div/>
 ---
 
 ## 📖 About The Project
@@ -14,7 +14,7 @@ The platform connects tenants and property owners through a transparent and secu
 
 ### Core Technologies
 
-<p align="left">
+<p align="center">
   <img src="https://skillicons.dev/icons?i=nextjs,react,tailwind,js,prisma,postgres" />
 </p>
 
