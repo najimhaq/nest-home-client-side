@@ -1,36 +1,33 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<div align="center">
+  <img src="https://i.ibb.co/3mbXRWBd/Screenshot-2026-05-03-at-2-01-55-PM.png" alt="SunCart Logo" width="120" />
+  <h1> NestHome</h1>
+  <p><strong>Property Rental & Booking Platform</strong></p>
 
-## Getting Started
+---
 
-First, run the development server:
+## 📖 About The Project
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+**NestHome** The Property Rental & Booking Platform helps property owners list rental properties and allows tenants to discover, book, and pay reservation fees online. The system includes role-based access control, property management, booking workflows, secure payments, review systems, and administrative moderation.
+The platform connects tenants and property owners through a transparent and secure rental marketplace.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ Built With
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### Core Technologies
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+<p align="left">
+  <img src="https://skillicons.dev/icons?i=nextjs,react,tailwind,js,prisma,postgres" />
+</p>
 
-## Learn More
+| Technology                                                | Version | Purpose                            |
+| --------------------------------------------------------- | ------- | ---------------------------------- |
+| [Next.js](https://nextjs.org/)                            | 16.2.10 | React framework with SSR & routing |
+| [React](https://reactjs.org/)                             | 18.3.1  | UI library                         |
+| [Tailwind CSS](https://tailwindcss.com/)                  | 4.2.4   | Utility-first CSS framework        |
+| [daisy UI](https://daisyui.com/)                          | 5.5.19  | Utility-first CSS framework        |
+| [Prisma](https://www.prisma.io/)                          | 7.8.0   | ORM                                |
+| [PostgreSQL](https://www.postgresql.org/)                 | 7.2.0   | Database                           |
+| [BetterAuth](https://better-auth.com/)                    | 1.6.9   | Authentication solution            |
+| [Framer Motion](https://motion.dev/examples)              | 12.42.2 | Animation library                  |
+| [React Icons](https://react-icons.github.io/react-icons/) | 5.6.0   | Icon library                       |
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---

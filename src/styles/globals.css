@@ -1,0 +1,100 @@
+@import 'tailwindcss';
+
+/* Custom Theme Configuration */
+
+:root {
+  --color-primary: #14b8a6;
+  --color-primary-dark: #0f766e;
+  --color-accent: #fb7185;
+  --color-bg: #0a0a0a;
+  --color-surface: #171717;
+  --color-border: #262626;
+  --color-text: #f5f5f5;
+  --color-muted: #a3a3a3;
+}
+
+body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+/* Keyframes */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  0% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideDown {
+  0% {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  0% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    transform: scale(0.3);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Base Styles */
+@layer base {
+  body {
+    background-color: #f8fafc;
+    color: #111827;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* Utility Classes */
+@layer utilities {
+  .text-gradient {
+    /* Fallback: use CSS gradient with the custom color variables */
+    background-image: linear-gradient(90deg, var(--color-primary-600), var(--color-secondary-600));
+    background-clip: text;
+    -webkit-background-clip: text;
+    color: transparent;
+    -webkit-text-fill-color: transparent;
+  }
+}
