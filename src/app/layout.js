@@ -4,8 +4,7 @@ import '../styles/globals.css';
 import { Manrope } from 'next/font/google';
 import Navbar from '@/components/ui/Navbar';
 import Footer from '@/components/ui/Footer';
-import { ThemeProvider } from '@/components/ui/ThemeProvider';
-
+import { AuthProvider } from '@/context/AuthContext';
 
 export const metadata = {
   title: 'Rentify - Find Your Perfect Nest',
@@ -20,9 +19,14 @@ const manrope = Manrope({
 
 export default function RootLayout({ children }) {
   return (
-    <html lang='en' suppressHydrationWarning className={manrope.className}>
+    <html
+      lang='en'
+      data-scroll-behavior='smooth'
+      suppressHydrationWarning
+      className={manrope.className}
+    >
       <body className='flex min-h-screen flex-col bg-black text-white antialiased'>
-        <ThemeProvider>
+        <AuthProvider>
           <Navbar />
           <main className='grow'>{children}</main>
           <Footer />
@@ -36,7 +40,7 @@ export default function RootLayout({ children }) {
               },
             }}
           />
-        </ThemeProvider>
+        </AuthProvider>
       </body>
     </html>
   );

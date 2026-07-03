@@ -36,8 +36,8 @@ export default function FeatureSection() {
       >
         <h2 className='text-3xl font-bold sm:text-4xl'>
           Why Choose{' '}
-          <span className='bg-linear-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent'>
-            Rentify
+          <span className='bg-linear-to-r from-purple-400 via-pink-400 to-sky-400 bg-clip-text text-transparent'>
+            StayNest
           </span>
         </h2>
         <p className='mt-3 text-white/50'>

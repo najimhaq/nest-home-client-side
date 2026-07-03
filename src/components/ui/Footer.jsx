@@ -29,9 +29,9 @@ export default function Footer() {
       <div className='mx-auto grid max-w-6xl grid-cols-2 gap-10 md:grid-cols-5'>
         <div className='col-span-2'>
           <h3 className='text-2xl font-bold'>
-            Rent
-            <span className='bg-linear-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent'>
-              ify
+            Stay
+            <span className='bg-linear-to-r from-purple-400 via-pink-400 to-sky-400 bg-clip-text text-transparent'>
+              Nest
             </span>
           </h3>
           <p className='mt-3 max-w-xs text-sm text-white/50'>
