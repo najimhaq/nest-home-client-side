@@ -1,5 +1,7 @@
 // frontend - components/ui/Footer.jsx
+'use client';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { FaFacebook, FaInstagram, FaTwitter, FaLinkedin } from 'react-icons/fa';
 
 const footerLinks = {
@@ -20,6 +22,10 @@ const footerLinks = {
 };
 
 export default function Footer() {
+  const pathname = usePathname();
+  if (pathname.includes('dashboard')) {
+    return null;
+  }
   return (
     <footer className='relative mt-20 border-t border-white/10 bg-black px-4 py-16 text-white'>
       <div className='pointer-events-none absolute inset-0 -z-10'>

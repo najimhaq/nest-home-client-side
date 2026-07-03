@@ -20,8 +20,8 @@ import Image from 'next/image';
 import { useAuth } from '@/context/AuthContext';
 
 const navLinks = [
-  { href: '/properties', label: 'Explore' },
-  { href: '/how-it-works', label: 'How it Works' },
+  { href: '/properties', label: 'Properties' },
+  { href: '/company', label: 'Company' },
   { href: '/about', label: 'About' },
 ];
 
@@ -33,9 +33,13 @@ export default function Navbar() {
   // console.log('in navbar', user)
 
   // Don't show navbar on auth pages
-  if (pathname?.startsWith('/signin') || pathname?.startsWith('/signup')) {
+  /* if (pathname?.startsWith('/signin') || pathname?.startsWith('/signup')) {
     return null;
-  }
+  } */
+
+ if (pathname.includes('dashboard')) {
+   return null;
+ }
 
   const isActive = (href) =>
     pathname === href || pathname?.startsWith(href + '/');
@@ -129,7 +133,7 @@ export default function Navbar() {
 
                     <div className='py-1'>
                       <Link
-                        href='/dashboard'
+                        href='/dashboard/tenant'
                         className='flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-white/70 transition hover:bg-white/5 hover:text-white'
                         onClick={() => setProfileOpen(false)}
                       >
