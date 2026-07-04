@@ -17,21 +17,29 @@ import {
 export const sidebarMenu = {
   TENANT: [
     { label: 'Overview', href: '/dashboard', icon: FiLayout },
-    { label: 'My Bookings', href: '/dashboard/bookings', icon: FiCalendar },
-    { label: 'Favorites', href: '/dashboard/favorites', icon: FiHeart },
-    { label: 'Profile', href: '/dashboard/profile', icon: FiUser },
+    {
+      label: 'My Bookings',
+      href: '/dashboard/tenant/bookings',
+      icon: FiCalendar,
+    },
+    { label: 'Favorites', href: '/dashboard/tenant/favorites', icon: FiHeart },
+    { label: 'Profile', href: '/dashboard/tenant/profile', icon: FiUser },
   ],
   OWNER: [
     { label: 'Overview', href: '/dashboard', icon: FiLayout },
-    { label: 'My Properties', href: '/dashboard/properties', icon: FiHome },
+    {
+      label: 'My Properties',
+      href: '/dashboard/owner/properties',
+      icon: FiHome,
+    },
     {
       label: 'Add Property',
-      href: '/dashboard/properties/new',
+      href: '/dashboard/owner/properties/new',
       icon: FiPlusCircle,
     },
-    { label: 'Bookings', href: '/dashboard/bookings', icon: FiList },
-    { label: 'Earnings', href: '/dashboard/earnings', icon: FiDollarSign },
-    { label: 'Profile', href: '/dashboard/profile', icon: FiUser },
+    { label: 'Booking Requests', href: '/dashboard/owner/booking-requests', icon: FiList },
+    { label: 'Earnings', href: '/dashboard/owner/earnings', icon: FiDollarSign },
+    { label: 'Profile', href: '/dashboard/owner/profile', icon: FiUser },
   ],
   ADMIN: [
     { label: 'Overview', href: '/dashboard', icon: FiLayout },

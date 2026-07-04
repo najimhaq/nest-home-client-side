@@ -7,6 +7,7 @@ import {
   useState,
   useCallback,
 } from 'react';
+import { useRouter } from 'next/navigation';
 import { authClient } from '@/lib/auth-client';
 
 const AuthContext = createContext(null);
@@ -14,6 +15,7 @@ const AuthContext = createContext(null);
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
 
   const refreshSession = useCallback(async () => {
     try {
@@ -33,6 +35,8 @@ export function AuthProvider({ children }) {
   const logout = async () => {
     await authClient.signOut();
     setUser(null);
+    router.push('/');
+    router.refresh();
   };
 
   return (

@@ -4,7 +4,7 @@
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { toast } from 'react-hot-toast';
 import { FcGoogle } from 'react-icons/fc';
@@ -13,16 +13,10 @@ import { signInSchema } from '@/utils/validations/auth';
 import { Button } from '@/components/reusable/Button';
 import { Input } from '@/components/reusable/Input';
 import { authClient } from '@/lib/auth-client';
-import { useAuth } from '@/context/AuthContext';
-
+import { getRoleDashboardPath } from '@/lib/getRoleDashboardPath';
 
 export function SignInForm() {
   const router = useRouter();
-  const { refreshSession } = useAuth();
-  const searchParams = useSearchParams();
-  const rawRedirect = searchParams.get('redirect') || '/';
-  const redirect = rawRedirect && rawRedirect !== 'null' ? rawRedirect : '/';
-  // console.log('redirectTo', redirect);
   const [isLoading, setIsLoading] = useState(false);
 
   const {
@@ -36,11 +30,13 @@ export function SignInForm() {
   const onSubmit = async (data) => {
     setIsLoading(true);
     try {
-      const { error } = await authClient.signIn.email({
+      const { error, data: signInData } = await authClient.signIn.email({
         email: data.email,
         password: data.password,
         rememberMe: true,
       });
+      console.log('JWT Token:', signInData?.token);
+      console.log('Full signInData:', signInData);
 
       if (error) {
         toast.error(error.message || 'Invalid credentials');
@@ -48,9 +44,9 @@ export function SignInForm() {
       }
 
       toast.success('Signed in successfully!');
-      await refreshSession(); // Refresh the session after sign-in
-      router.replace(redirect);
+      const dashboardPath = getRoleDashboardPath(signInData?.user?.role);
 
+      router.replace(dashboardPath);
     } catch (err) {
       toast.error('Something went wrong');
     } finally {
@@ -59,17 +55,25 @@ export function SignInForm() {
   };
 
   const handleGoogleSignIn = async () => {
-    await authClient.signIn.social({
-      provider: 'google',
-      callbackURL: '/',
-    });
+    try {
+      await authClient.signIn.social({
+        provider: 'google',
+        callbackURL: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard`,
+      });
+    } catch (error) {
+      toast.error('Google sign-in failed');
+    }
   };
 
   const handleGithubSignIn = async () => {
-    await authClient.signIn.social({
-      provider: 'github',
-      callbackURL: '/',
-    });
+    try {
+      await authClient.signIn.social({
+        provider: 'github',
+        callbackURL: `${process.env.NEXT_PUBLIC_APP_URL}/dashboard`,
+      });
+    } catch (error) {
+      toast.error('GitHub sign-in failed');
+    }
   };
 
   return (
@@ -134,7 +138,7 @@ export function SignInForm() {
 
         <Button
           type='submit'
-          variant='primary'
+          variant='gradient'
           className='w-full'
           isLoading={isLoading}
         >
@@ -146,7 +150,7 @@ export function SignInForm() {
         Don't have an account?{' '}
         <a
           href='/signup'
-          className='text-amber-600 hover:text-amber-700 font-medium'
+          className='text-blue-600 hover:text-blue-700 font-medium'
         >
           Sign up
         </a>

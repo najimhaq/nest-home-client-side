@@ -9,8 +9,7 @@ import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { toast } from 'react-hot-toast';
 import { signUpSchema } from '@/app/schemas/authSchema';
-import { FcGoogle } from 'react-icons/fc';
-import { FaGithub } from 'react-icons/fa';
+import { FaGithub, FaGoogle } from 'react-icons/fa';
 import { FiEye, FiEyeOff, FiUser, FiCamera } from 'react-icons/fi';
 import { Button } from '@/components/reusable/Button';
 import { Input } from '@/components/reusable/Input';
@@ -18,10 +17,9 @@ import { authClient } from '@/lib/auth-client';
 import { uploadImage } from '@/lib/uploadImage';
 import { useAuth } from '@/context/AuthContext';
 
-
 export function SignUpForm() {
   const router = useRouter();
-  const {refreshSession} = useAuth()
+  const { refreshSession } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [isUploading, setIsUploading] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -84,7 +82,7 @@ export function SignUpForm() {
 
       toast.success('Account created successfully!');
       await refreshSession(); // Refresh the session after sign-up
-      router.push('/');
+      router.push('/signin');
     } catch (err) {
       toast.error(err.message || 'Something went wrong');
     } finally {
@@ -108,7 +106,7 @@ export function SignUpForm() {
       {/* Avatar Upload */}
       <div className='flex justify-center mb-6'>
         <label className='relative cursor-pointer group'>
-          <div className='w-20 h-20 rounded-full border-2 border-dashed border-slate-300 flex items-center justify-center overflow-hidden bg-slate-50 group-hover:border-amber-500 transition'>
+          <div className='w-20 h-20 rounded-full border-2 border-dashed border-slate-300 flex items-center justify-center overflow-hidden bg-slate-50 group-hover:border-purple-500 transition'>
             {imagePreview ? (
               <Image
                 src={imagePreview}
@@ -123,7 +121,7 @@ export function SignUpForm() {
               <FiUser className='w-8 h-8 text-slate-400' />
             )}
           </div>
-          <div className='absolute bottom-0 right-0 bg-amber-500 rounded-full p-1.5 border-2 border-white'>
+          <div className='absolute bottom-0 right-0 bg-purple-500 rounded-full p-1.5 border-2 border-white'>
             <FiCamera className='w-3 h-3 text-white' />
           </div>
           <input
@@ -138,7 +136,7 @@ export function SignUpForm() {
       {/* OAuth Buttons */}
       <div className='space-y-3 mb-6'>
         <Button variant='outline' className='w-full gap-2'>
-          <FcGoogle className='w-5 h-5' />
+          <FaGoogle className='w-5 h-5' />
           Continue with Google
         </Button>
         <Button variant='outline' className='w-full gap-2'>
@@ -163,7 +161,7 @@ export function SignUpForm() {
         <label
           className={`cursor-pointer rounded-lg border-2 p-3 text-center transition-all ${
             selectedRole === 'TENANT'
-              ? 'border-amber-500 bg-amber-50'
+              ? 'border-purple-500 bg-purple-50'
               : 'border-slate-200 hover:border-slate-300'
           }`}
         >
@@ -179,7 +177,7 @@ export function SignUpForm() {
         <label
           className={`cursor-pointer rounded-lg border-2 p-3 text-center transition-all ${
             selectedRole === 'OWNER'
-              ? 'border-amber-500 bg-amber-50'
+              ? 'border-purple-500 bg-purple-50'
               : 'border-slate-200 hover:border-slate-300'
           }`}
         >
@@ -268,7 +266,7 @@ export function SignUpForm() {
         Already have an account?{' '}
         <a
           href='/signin'
-          className='text-amber-600 hover:text-amber-700 font-medium'
+          className='text-purple-600 hover:text-purple-700 font-medium'
         >
           Sign in
         </a>

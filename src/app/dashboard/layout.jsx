@@ -2,9 +2,16 @@
 
 import DashboardSidebar from "@/components/layouts/DashboardSidebar";
 import DashboardSidebarMobile from "@/components/layouts/DashboardSidebarMobile";
+import { getServerSession } from "@/lib/getServerSession";
+import { redirect } from "next/navigation";
 
 
-export default function DashboardLayout({ children }) {
+export default async function DashboardLayout({ children }) {
+  const session = await getServerSession();
+
+  if (!session?.user) {
+    redirect('/signin');
+  }
   return (
     <div className='flex h-screen overflow-hidden bg-black'>
       <DashboardSidebar />

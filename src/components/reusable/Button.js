@@ -14,11 +14,13 @@ export function Button({
   ...props
 }) {
   const variants = {
-    primary: 'bg-amber-500 text-white hover:bg-amber-600',
+    primary: 'bg-purple-500 text-white hover:bg-purple-600',
     secondary: 'bg-slate-800 text-white hover:bg-slate-700',
     outline:
-      'border-2 border-amber-500 text-amber-500 hover:bg-amber-500 hover:text-white',
+      'border-2 border-purple-500 text-purple-500 hover:bg-purple-500 hover:text-white',
     ghost: 'text-slate-600 hover:text-slate-900 hover:bg-slate-100',
+    gradient:
+      'bg-linear-to-r from-purple-400 via-pink-400 to-sky-400 text-white hover:from-purple-600 hover:to-pink-700',
   };
 
   const sizes = {
