@@ -9,6 +9,7 @@ import { motion } from 'framer-motion';
 import { toast } from 'react-hot-toast';
 import { FcGoogle } from 'react-icons/fc';
 import { FaGithub } from 'react-icons/fa';
+import { HiOutlineEye, HiOutlineEyeOff } from 'react-icons/hi'; // 👈 new
 import { signInSchema } from '@/utils/validations/auth';
 import { Button } from '@/components/reusable/Button';
 import { Input } from '@/components/reusable/Input';
@@ -18,6 +19,9 @@ import { getRoleDashboardPath } from '@/lib/getRoleDashboardPath';
 export function SignInForm() {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+
+  // 👇 new state for password visibility
+  const [showPassword, setShowPassword] = useState(false);
 
   const {
     register,
@@ -35,6 +39,7 @@ export function SignInForm() {
         password: data.password,
         rememberMe: true,
       });
+
       console.log('JWT Token:', signInData?.token);
       console.log('Full signInData:', signInData);
 
@@ -45,7 +50,6 @@ export function SignInForm() {
 
       toast.success('Signed in successfully!');
       const dashboardPath = getRoleDashboardPath(signInData?.user?.role);
-
       router.replace(dashboardPath);
     } catch (err) {
       toast.error('Something went wrong');
@@ -128,13 +132,30 @@ export function SignInForm() {
           error={errors.email?.message}
           {...register('email')}
         />
-        <Input
-          label='Password'
-          type='password'
-          placeholder='••••••••'
-          error={errors.password?.message}
-          {...register('password')}
-        />
+
+        {/* Password with toggle */}
+        <div className='relative'>
+          <Input
+            label='Password'
+            type={showPassword ? 'text' : 'password'}
+            placeholder='••••••••'
+            error={errors.password?.message}
+            {...register('password')}
+          />
+
+          <button
+            type='button'
+            tabIndex={-1}
+            onClick={() => setShowPassword((prev) => !prev)}
+            className='absolute right-3 top-9.5 text-slate-400 hover:text-slate-600'
+          >
+            {showPassword ? (
+              <HiOutlineEyeOff className='h-5 w-5' />
+            ) : (
+              <HiOutlineEye className='h-5 w-5' />
+            )}
+          </button>
+        </div>
 
         <Button
           type='submit'

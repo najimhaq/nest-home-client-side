@@ -4,7 +4,6 @@ import { SignInForm } from '@/components/features/auth/SignInForm';
 import { getRoleDashboardPath } from '@/lib/getRoleDashboardPath';
 import { getServerSession } from '@/lib/getServerSession';
 import { redirect } from 'next/navigation';
-import { get } from 'react-hook-form';
 
 export const metadata = {
   title: 'Sign In - StayNest',
