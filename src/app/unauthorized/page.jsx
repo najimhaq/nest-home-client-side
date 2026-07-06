@@ -1,9 +1,10 @@
 'use client';
 
 import Link from 'next/link';
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
 import { FiLock, FiArrowLeft, FiHome } from 'react-icons/fi';
-import { useSession } from '../lib/auth-client';
+import { useSession } from '@/lib/auth-client';
+
 
 
 const roleRedirect = {
@@ -18,7 +19,7 @@ export default function UnauthorizedPage() {
 
   // ✅ Sign in থাকলে dashboard link, না থাকলে signin link
   const primaryHref = user
-    ? roleRedirect[user.role] || '/dashboard'
+    ? roleRedirect[user?.role] || '/dashboard'
     : '/signin';
 
   const primaryLabel = user ? 'Go to My Dashboard' : 'Sign In';

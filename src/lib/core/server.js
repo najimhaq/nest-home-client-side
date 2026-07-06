@@ -1,6 +1,5 @@
+// frontend/src/lib/core/server.js
 import { headers } from 'next/headers';
-import { auth } from '../../lib/auth';
-
 
 const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || '';
 
@@ -8,15 +7,30 @@ if (!baseUrl) {
   throw new Error('NEXT_PUBLIC_API_BASE_URL is not defined');
 }
 
+// Better Auth কে সরাসরি import না করে,
+// backend JWT endpoint call করব
 const getJwt = async () => {
-  const res = await auth.api.getSession({
-    headers: await headers(),
-    asResponse: true,
-  });
-  return res.headers.get('set-auth-jwt') || null;
+  try {
+    // Next.js server component থেকে backend /auth/jwt hit করা
+    const res = await fetch(`${baseUrl}/token/jwt`, {
+      // frontend client থেকে আসা cookies/headers কে forward করতে চাইলে:
+      headers: await headers(),
+      // অথবা শুধু credentials দরকার হলে:
+      // credentials: 'include',
+      cache: 'no-store',
+    });
+
+    if (!res.ok) return null;
+
+    const data = await res.json();
+    return data.token || null;
+  } catch (err) {
+    console.error('getJwt error:', err);
+    return null;
+  }
 };
 
-// GET Request এর জন্য (Server Component এ ডাটা দেখানোর জন্য)
+// GET Request (Server Component)
 export const serverFetch = async (path, options = {}) => {
   if (!path || path.includes('/undefined')) {
     throw new Error(`Invalid request path: ${path}`);
@@ -51,7 +65,6 @@ export const serverFetch = async (path, options = {}) => {
     throw err;
   }
 };
-
 // POST/PUT/DELETE Request এর জন্য (Server Actions এর জন্য)
 export const serverMutation = async ({ path, method = 'POST', payload }) => {
   // ফিডব্যাক ফিক্স: সার্ভার মিউটেশনেও টোকেন পাঠানো জরুরি
@@ -62,7 +75,7 @@ export const serverMutation = async ({ path, method = 'POST', payload }) => {
       method,
       headers: {
         'Content-Type': 'application/json',
-        ...(token ? { Authorization: `Bearer ${token}` } : {}), 
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
       },
       body: JSON.stringify(payload),
     });

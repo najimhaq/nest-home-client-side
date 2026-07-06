@@ -6,20 +6,20 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
 import { FiMenu, FiX, FiLogOut } from 'react-icons/fi';
-import { useAuth } from '@/context/AuthContext';
-import { sidebarMenu } from '../config/sidebarMenu';
+import useSidebarMenu from '@/hooks/useSideberMenu';
 
 
 export default function DashboardSidebarMobile() {
   const [open, setOpen] = useState(false);
   const pathname = usePathname();
-  const { user, logout } = useAuth();
+  const { role, menuItems, isLoading,logout } = useSidebarMenu();
+  // console.log('DashboardSidebarMobile', role);
 
-  const role = user?.role || 'TENANT';
-  const menuItems = sidebarMenu[role] || sidebarMenu.TENANT;
 
-  const isActive = (href) =>
-    pathname === href || (href !== '/dashboard' && pathname?.startsWith(href));
+  const isActive = (item) =>
+    item.exact
+      ? pathname === item.href
+      : pathname === item.href || pathname?.startsWith(item.href + '/');
 
   return (
     <div className='md:hidden'>
@@ -63,10 +63,9 @@ export default function DashboardSidebarMobile() {
                     <Link
                       key={item.href}
                       href={item.href}
-                      onClick={() => setOpen(false)}
                       className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition ${
-                        isActive(item.href)
-                          ? 'bg-white/10 text-white'
+                        isActive(item)
+                          ? 'bg-pink-500/30 text-white'
                           : 'text-white/60 hover:bg-white/5 hover:text-white'
                       }`}
                     >

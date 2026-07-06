@@ -6,7 +6,7 @@ export async function getServerSession() {
   const cookieHeader = cookieStore.toString();
 
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/auth/get-session`,
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/auth/get-session`,
     {
       headers: {
         cookie: cookieHeader,

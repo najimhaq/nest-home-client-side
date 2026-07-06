@@ -30,19 +30,25 @@ export default function Navbar() {
   const [profileOpen, setProfileOpen] = useState(false);
   const pathname = usePathname();
   const { user, isAuthenticated, isLoading, logout } = useAuth();
-  // console.log('in navbar', user)
 
-  // Don't show navbar on auth pages
-  /* if (pathname?.startsWith('/signin') || pathname?.startsWith('/signup')) {
+  if (pathname.includes('dashboard')) {
     return null;
-  } */
-
- if (pathname.includes('dashboard')) {
-   return null;
- }
+  }
 
   const isActive = (href) =>
     pathname === href || pathname?.startsWith(href + '/');
+
+  const isTenant = user?.role === 'TENANT';
+  const isOwner = user?.role === 'OWNER';
+
+  const bookingsPath = isOwner
+    ? '/dashboard/owner/booking-requests'
+    : '/dashboard/tenant/bookings';
+
+  const favoritesPath = '/dashboard/tenant/favorites';
+
+  const showBookings = isTenant || isOwner;
+  const showFavorites = isTenant;
 
   return (
     <header className='sticky top-4 z-50 mx-4 md:mx-8'>
@@ -132,30 +138,37 @@ export default function Navbar() {
                     </div>
 
                     <div className='py-1'>
+                      {/* ✅ FIX: generic /dashboard, role-specific hardcode বাদ */}
                       <Link
-                        href='/dashboard/tenant'
+                        href='/dashboard'
                         className='flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-white/70 transition hover:bg-white/5 hover:text-white'
                         onClick={() => setProfileOpen(false)}
                       >
                         <FiLayout size={16} />
                         Dashboard
                       </Link>
-                      <Link
-                        href='/bookings'
-                        className='flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-white/70 transition hover:bg-white/5 hover:text-white'
-                        onClick={() => setProfileOpen(false)}
-                      >
-                        <FiCalendar size={16} />
-                        My Bookings
-                      </Link>
-                      <Link
-                        href='/favorites'
-                        className='flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-white/70 transition hover:bg-white/5 hover:text-white'
-                        onClick={() => setProfileOpen(false)}
-                      >
-                        <FiHeart size={16} />
-                        Favorites
-                      </Link>
+
+                      {showBookings && (
+                        <Link
+                          href={bookingsPath}
+                          className='flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-white/70 transition hover:bg-white/5 hover:text-white'
+                          onClick={() => setProfileOpen(false)}
+                        >
+                          <FiCalendar size={16} />
+                          My Bookings
+                        </Link>
+                      )}
+
+                      {showFavorites && (
+                        <Link
+                          href={favoritesPath}
+                          className='flex items-center gap-2 rounded-lg px-3 py-2 text-sm text-white/70 transition hover:bg-white/5 hover:text-white'
+                          onClick={() => setProfileOpen(false)}
+                        >
+                          <FiHeart size={16} />
+                          Favorites
+                        </Link>
+                      )}
                     </div>
 
                     <div className='border-t border-white/10 py-1'>
@@ -241,6 +254,7 @@ export default function Navbar() {
                     <p className='text-xs text-white/50'>{user?.role}</p>
                   </div>
                 </div>
+
                 <Link
                   href='/dashboard'
                   className='flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm text-white/70 hover:bg-white/5 hover:text-white'
@@ -249,22 +263,29 @@ export default function Navbar() {
                   <FiLayout size={16} />
                   Dashboard
                 </Link>
-                <Link
-                  href='/bookings'
-                  className='flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm text-white/70 hover:bg-white/5 hover:text-white'
-                  onClick={() => setOpen(false)}
-                >
-                  <FiCalendar size={16} />
-                  My Bookings
-                </Link>
-                <Link
-                  href='/favorites'
-                  className='flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm text-white/70 hover:bg-white/5 hover:text-white'
-                  onClick={() => setOpen(false)}
-                >
-                  <FiHeart size={16} />
-                  Favorites
-                </Link>
+
+                {showBookings && (
+                  <Link
+                    href={bookingsPath}
+                    className='flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm text-white/70 hover:bg-white/5 hover:text-white'
+                    onClick={() => setOpen(false)}
+                  >
+                    <FiCalendar size={16} />
+                    My Bookings
+                  </Link>
+                )}
+
+                {showFavorites && (
+                  <Link
+                    href={favoritesPath}
+                    className='flex items-center gap-2 rounded-lg px-3 py-2.5 text-sm text-white/70 hover:bg-white/5 hover:text-white'
+                    onClick={() => setOpen(false)}
+                  >
+                    <FiHeart size={16} />
+                    Favorites
+                  </Link>
+                )}
+
                 <button
                   onClick={() => {
                     logout();

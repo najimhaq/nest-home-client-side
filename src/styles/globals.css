@@ -186,3 +186,22 @@
 html {
   scroll-behavior: smooth;
 }
+
+ .skeleton {
+          background: linear-gradient(
+            90deg,
+            #1c1b19 25%,
+            #222120 50%,
+            #1c1b19 75%
+          );
+          background-size: 200% 100%;
+          animation: shimmer 1.5s ease-in-out infinite;
+        }
+        @keyframes shimmer {
+          0% {
+            background-position: -200% 0;
+          }
+          100% {
+            background-position: 200% 0;
+          }
+        }

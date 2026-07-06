@@ -1,4 +1,4 @@
-// frontend - context/AuthContext.js
+// frontend/src/context/AuthContext.js
 'use client';
 import {
   createContext,
@@ -12,6 +12,8 @@ import { authClient } from '@/lib/auth-client';
 
 const AuthContext = createContext(null);
 
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || '';
+
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -19,9 +21,33 @@ export function AuthProvider({ children }) {
 
   const refreshSession = useCallback(async () => {
     try {
-      const { data } = await authClient.getSession();
+      const jwtRes = await fetch(`${API_BASE}/token/jwt`, {
+        credentials: 'include',
+        cache: 'no-store',
+      });
+
+      if (!jwtRes.ok) {
+        setUser(null);
+        return;
+      }
+
+      const { token } = await jwtRes.json();
+
+      const meRes = await fetch(`${API_BASE}/users/me`, {
+        headers: { Authorization: `Bearer ${token}` },
+        cache: 'no-store',
+      });
+
+      if (!meRes.ok) {
+        setUser(null);
+        return;
+      }
+
+      const data = await meRes.json();
+      // console.log('[AuthContext] user:', data.user);
       setUser(data?.user || null);
-    } catch {
+    } catch (err) {
+      console.error('refreshSession error:', err);
       setUser(null);
     } finally {
       setIsLoading(false);

@@ -5,20 +5,19 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 import { FiUser, FiLogOut, FiHome } from 'react-icons/fi';
+import useSidebarMenu from '@/hooks/useSideberMenu.js';
 import { useAuth } from '@/context/AuthContext';
-import { sidebarMenu } from '../config/sidebarMenu.js';
-
-
 
 export default function DashboardSidebar() {
   const pathname = usePathname();
-  const { user, logout, isLoading } = useAuth();
+  const {user} = useAuth();
+  const { role, menuItems, isLoading, logout } = useSidebarMenu();
+  // console.log('DashboardSidebar inside', role);
 
-  const role = user?.role || 'TENANT';
-  const menuItems = sidebarMenu[role] || sidebarMenu.TENANT;
-
-  const isActive = (href) =>
-    pathname === href || (href !== '/dashboard' && pathname?.startsWith(href));
+  const isActive = (item) =>
+    item.exact
+      ? pathname === item.href
+      : pathname === item.href || pathname?.startsWith(item.href + '/');
 
   if (isLoading) {
     return (
@@ -61,8 +60,8 @@ export default function DashboardSidebar() {
                 key={item.href}
                 href={item.href}
                 className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition ${
-                  isActive(item.href)
-                    ? 'bg-white/10 text-white'
+                  isActive(item)
+                    ? 'bg-purple-500/30 text-white'
                     : 'text-white/60 hover:bg-white/5 hover:text-white'
                 }`}
               >
@@ -73,7 +72,7 @@ export default function DashboardSidebar() {
           })}
         </nav>
       </div>
-
+      {/* className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition */}
       <div className='border-t border-white/10 pt-4'>
         <div className='flex items-center gap-3 px-2 mb-3'>
           {user?.image ? (
