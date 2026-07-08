@@ -1,10 +1,9 @@
 // frontend - app/dashboard/layout.jsx
 
-import DashboardSidebar from "@/components/layouts/DashboardSidebar";
-import DashboardSidebarMobile from "@/components/layouts/DashboardSidebarMobile";
-import { getServerSession } from "@/lib/getServerSession";
-import { redirect } from "next/navigation";
-
+import DashboardSidebar from '@/components/layouts/DashboardSidebar';
+import DashboardSidebarMobile from '@/components/layouts/DashboardSidebarMobile';
+import { getServerSession } from '@/lib/getServerSession';
+import { redirect } from 'next/navigation';
 
 export default async function DashboardLayout({ children }) {
   const session = await getServerSession();
@@ -12,14 +11,17 @@ export default async function DashboardLayout({ children }) {
   if (!session?.user) {
     redirect('/signin');
   }
+
   return (
     <div className='flex h-screen overflow-hidden bg-black'>
       <DashboardSidebar />
-      <div className='flex-1'>
-        <div className='flex-1 overflow-y-auto bg-linear-to-br from-gray-950 to-black'>
-          <DashboardSidebarMobile />
-        </div>
-        <main className='p-6 pt-20 lg:p-8 lg:pt-8'>{children}</main>
+      <div className='flex-1 flex flex-col overflow-hidden'>
+        {' '}
+        {/* এখানে flex-col ও overflow-hidden যোগ করলাম */}
+        <DashboardSidebarMobile />
+        <main className='flex-1 overflow-y-auto bg-linear-to-br from-gray-950 to-black '>
+          {children}
+        </main>
       </div>
     </div>
   );
